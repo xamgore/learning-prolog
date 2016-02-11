@@ -1,3 +1,5 @@
+% Задание 1.
+
 %parent(родитель,ребенок,дата_рождения).
 parent(tom,rid,1950).
 parent(tom,ron,1952).
@@ -68,5 +70,33 @@ predok(P, petr).
 % P = tom ;
 % P = ron.
 
-% 10) Кто чей родитель?
+% 10. Кто чей родитель?
 parent(P, C, _).
+
+
+% Задание 9. Определите правила  бабушка, внук, внучка, тетя, дядя.
+isGranny(Granny, ForWhom) :-
+    gender(female, Granny),
+    parent(Granny, Parent, _),
+    parent(Parent, ForWhom, _).
+
+isGrandSon(Son, ForWhom) :-
+    gender(male, Son),
+    parent(Parent, Son, _),
+    parent(ForWhom, Parent, _).
+
+isGrandDaughter(Daughter, ForWhom) :-
+    gender(female, Daughter),
+    parent(Parent, Daughter, _),
+    parent(ForWhom, Parent, _).
+
+isAunt(Aunt, ForWhom) :-
+    gender(female, Aunt),
+    parent(Parent, ForWhom, _),
+    isSyster(Aunt, Parent).
+
+isUncle(Uncle, ForWhom) :-
+    gender(male, Uncle),
+    parent(BrotherOfUncle, ForWhom, _),
+    parent(Parent, BrotherOfUncle, _),
+    parent(Parent, Uncle, _).

@@ -70,4 +70,14 @@ scalar_mult(Vector, Num, Res)    :- map(Vector, to(Res), call(mult, by(Num))).
 vector_mult(Matrix, Vector, Res) :- binary_map(Matrix, Vector, to(Res), scalar_mult).
 
 % Предикат транспонирования матрицы
+get_first([X | _], X).
+remove_first([_ | Row], Row).
+
+transpose([], []).
+transpose([[] | Matrix], Res) :- transpose(Matrix, Res), !.
+transpose(Matrix, [FirstElements | Transposed]) :-
+    map(Matrix, to(FirstElements), get_first),
+    map(Matrix, to(RestMatrix), remove_first),
+    transpose(RestMatrix, Transposed).
+
 % Предикат умножения двух матриц
